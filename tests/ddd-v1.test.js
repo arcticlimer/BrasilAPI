@@ -1,26 +1,35 @@
 const axios = require('axios');
 
-const scenariosDdd = {
-  sucess: require('./helpers/scenarios/ddd/success'),
-  inexistent: require('./helpers/scenarios/ddd/inexistent'),
-  incorrect: require('./helpers/scenarios/ddd/incorrect'),
-};
-
 const requestUrl = `${global.SERVER_URL}/api/ddd/v1`;
 
-describe.skip('api/ddd/v1 (E2E)', () => {
-  test('Utilizando um DDD válido: 12', async () => {
-    const response = await axios.get(`${requestUrl}/12`);
-    expect(response.data).toEqual(scenariosDdd.sucess);
+describe('api/ddd/v1 (E2E)', () => {
+  test('Utilizando um DDD válido: 17', async () => {
+    const response = await axios.get(`${requestUrl}/17`);
+    const { data, status } = response;
+
+    expect(status).toEqual(200);
+    expect(Array.isArray(data)).toBe(true);
+    expect(data[0]).toHaveProperty('ibgeCode');
+    expect(data[0]).toHaveProperty('uf');
+    expect(data[0]).toHaveProperty('cidade');
+    expect(data[0]).toHaveProperty('ddd');
   });
 
   test('Utilizando um DDD inexistente: 01', async () => {
-    const response = await axios.get(`${requestUrl}/01`);
-    expect(response.data).toEqual(scenariosDdd.inexistent);
-  });
+    const invalidResponse = {
+      name: 'dddError',
+      message: 'DDD não encontrado',
+      type: 'DDD_NOT_FOUND',
+    };
 
-  test('Utilizando um DDD inválido: 9999', async () => {
-    const response = await axios.get(`${requestUrl}/9999`);
-    expect(response.data).toEqual(scenariosDdd.incorrect);
+    try {
+      await axios.get(`${requestUrl}/01`);
+    } catch (error) {
+      const { response } = error;
+      const { data, status } = response;
+
+      expect(status).toEqual(404);
+      expect(data).toEqual(invalidResponse);
+    }
   });
 });
