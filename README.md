@@ -124,12 +124,12 @@ Busca por dados dos bancos brasileiros direto na base de dados do Bacen.
 ### DDD
 Busca as cidades brasileiras referente a um DDD.
 
-**GET** `http://localhost:3000/api/ddd/v1/17`**[code]**
+**GET** `https://brasilapi.com.br/api/ddd/v1/17`**[code]**
 
 #### Consulta com sucesso
 
 ```json
-// GET http://localhost:3000/api/ddd/v1/17
+// GET https://brasilapi.com.br/api/ddd/v1/17
 
 [
   {
@@ -145,7 +145,7 @@ Busca as cidades brasileiras referente a um DDD.
 #### Consulta com ddd incorreto
 
 ```json
-// GET http://localhost:3000/api/ddd/v1/01
+// GET https://brasilapi.com.br/api/ddd/v1/01
 
 {
   "name": "dddError",
@@ -157,7 +157,7 @@ Busca as cidades brasileiras referente a um DDD.
 #### Consulta com erro
 
 ```json
-// GET http://localhost:3000/api/ddd/v1/17
+// GET https://brasilapi.com.br/api/ddd/v1/17
 
 {
   "name": "dddError",
